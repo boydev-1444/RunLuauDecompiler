@@ -1,1 +1,1 @@
-![Main]("./imgs/runluau_dec.png" "RunLuau Introduction")
+![This is an alt text.](/imgs/runluau_dec.png "This is a sample image.")
