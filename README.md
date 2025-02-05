@@ -21,6 +21,7 @@ print(Decompile(BYTECODE_INPUT , CUSTOM_OPTIONS))
   - If you set a lower or higher version of the specified version, the decompiler is gonna return a error of unhandled version.
 
 - If you are gonna decompile a file, it must be to be a compiled file of the page before mentioned, if it isn't the decompiler isn't gonna can read it, and send a error
+![CompileExample](/imgs/compilexample.png =300x200)
 
 ## Upcoming
 - We are working in handle higher versions of Lua (5.1 -> Higher version)
