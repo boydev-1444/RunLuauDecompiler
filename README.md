@@ -1,1 +1,1 @@
-![Main]("/.imgs/runluau_dec.png" "RunLuau Introduction")
+![Main]("./imgs/runluau_dec.png" "RunLuau Introduction")
