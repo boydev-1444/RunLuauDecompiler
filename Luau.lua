@@ -8,7 +8,7 @@ local Opcodes = {
 }
 
 
-function Luau:ISVALIDOP(opName)
+function Luau.ValidOpcode(opName)
     local valid = false
     for _ , opcodeName in pairs(Opcodes) do
        if opcodeName == opName then
