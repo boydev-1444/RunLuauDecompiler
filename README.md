@@ -8,7 +8,7 @@
 ## How it works?
 
 - RunLuau decompiler with a imput of the bytecode "disassembles" all the bytecode information, for next, convert it to readable lua code.
-- You can check the [Example.lua] File(/example.lua) or the following code example:
+- You can check the [Example.lua](/example.lua) file or the following code example:
 ```lua
 local bytecode = BYTECODE_INPUT
 print(Decompile(BYTECODE_INPUT , CUSTOM_OPTIONS))
