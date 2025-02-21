@@ -1,4 +1,5 @@
 --!nonstrict
+
 local DEFAULT_OPTIONS = {
 	["DecompilerTimeOut"] = 10, -- Maximum time to decompile (If it passes it returns "Decompiler Timeout") (VALUE 0 OR NIL NOTHING WILL HAPPEN IF DECOMPILATION TIME EXCEEDS TOO LONG)
 	["ShowUsedGlobals"] = true, -- Show all items than are used in ENV on top of output
