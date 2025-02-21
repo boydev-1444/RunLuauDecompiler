@@ -19,4 +19,16 @@ function Luau.ValidOpcode(opName)
     return valid
 end
 
+function Luau.IsConditionalConstructor(opName)
+   local valid = false
+   local conditionalConstructors = {"EQ", "LT", "LE", "TEST", "TESTSET"}
+   for _ , opcodeName in pairs(conditionalConstructors) do
+      if opcodeName == opName then
+         valid = true
+         break
+      end
+   end
+   return valid
+end
+
 return Luau
