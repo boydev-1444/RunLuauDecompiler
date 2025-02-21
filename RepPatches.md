@@ -1,7 +1,3 @@
-<div style="text-align: left;">
-    <img src="/imgs/runluau_dec.png" alt="Runluau" style="width: 200px;">
-</div> 
-
 # RunLuau Patches list
 
 ### Patch 1 (02/21/2025)
