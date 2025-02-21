@@ -1,4 +1,7 @@
--- WARNING! USING ROLOX EXPLOIT ENVIRONENT
+--[[ @field WARNINGS
+1.USING ROLOX EXPLOIT ENVIRONENT
+2. THIS DECOMPILER IS NEW, IM WORKING ON IT, CAN HAVE A LOT OF ERRORS AND ISN'T THE FINAL VERSION
+]]
 local URL = "https://raw.githubusercontent.com/boydev-1444/RunLuauDecompiler/main/runluau.lua"
 local runluau_decompile = loadstring(game:HttpGet(URL))
 local Input = nil -- [[Some luac.nl bytecode input]]
@@ -10,14 +13,12 @@ local CustomOptions = {
 	["HelpComments"] = true,
 	["Flags"] = { -- Add/remove/change the values of the script
 		["Disassemble"] = true, -- Disassembled view of the bytecode
-		["Logs"] = true, -- Enables/Disables the logging system
 		["DecompilationDateOnTop"] = true, -- Shows the decompilation date on top of the decompilation
 		["ListUpvalues"] = true, -- Shows a list of upvalues on top of the decompilation
 		["ShowAllVariables"] = false, -- Shows all variables (Global, local, upvalues, constants) on top of the decompilation
 		["ShowLocalVariables"] = false, -- Shows a list of local variables on top of output
 	},
 }
--- SECOND WARNING! THIS DECOMPILER IS NEW, IM WORKING ON IT, CAN HAVE A LOT OF ERRORS
 local output = runluau_decompile(Input , CustomOptions) -- Main process
 local writefile = writefile
 writefile("Output.lua", output)
