@@ -7,7 +7,6 @@ local Opcodes = {
 	"CALL", "TAILCALL", "RETURN", "FORLOOP", "FORPREP", "TFORLOOP", "SETLIST", "CLOSE", "CLOSURE", "VARARG"
 }
 
-
 function Luau.ValidOpcode(opName)
     local valid = false
     for _ , opcodeName in pairs(Opcodes) do
