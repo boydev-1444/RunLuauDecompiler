@@ -24,8 +24,6 @@ function Luau.IsConditionalConstructor(opName)
    local conditionalConstructors = {"EQ", "LT", "LE", "TEST", "TESTSET"}
    for _ , opcodeName in pairs(conditionalConstructors) do
       if opcodeName == opName then
-         valid = true
-         break
       end
    end
    return valid
