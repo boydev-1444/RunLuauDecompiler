@@ -4,6 +4,7 @@
 - RunLuau is a powerful decompiler than compiles a bytecode, and coverts it into readable and working code.
 
 - RunLuau decompiler works with [Luac](https://luac.nl) compiler, we are working in handle it with binary bytecode!
+- You can check [patches list](/RepPatches.md) for more information!
 
 ## How it works?
 
