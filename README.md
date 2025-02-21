@@ -1,8 +1,8 @@
 ![Main](/imgs/runluau_dec.png "RunLuau Introduction")
 # Introduction
 
-- RunLuau is a powerful decompiler than compiles a bytecode, and coverts it into readable and working code.
-
+- RunLuau is a powerful decompiler than reads the bytecode, and coverts it into readable and working code.
+- RunLuau is a decompiler 100% programmed with Lua
 - RunLuau decompiler works with [Luac](https://luac.nl) compiler, we are working in handle it with binary bytecode!
 - You can check the [patches list](/RepPatches.md) for more information!
 
@@ -13,7 +13,7 @@
 ```lua
 local bytecode = BYTECODE_INPUT
 local ENV = (getfenv or getrenv or getgenv)()
-local ldecompile = Decompile or decompile or Env["decompile"]
+local ldecompile = Decompile or decompile or ENV["decompile"]
 print(ldecompile(BYTECODE_INPUT , CUSTOM_OPTIONS))
 ```
 
