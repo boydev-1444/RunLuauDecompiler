@@ -25,16 +25,7 @@ local VariableDefault = "v%s"
 local GlobalENV = (getfenv or getrenv or getgenv)()
 
 function Resquest(url)
-	local IsClient = RunService:IsClient()
-	local IsStudio = RunService:IsStudio()
-	local Loaded , Result = nil , nil
-	if not IsClient and IsStudio then
-		Loaded , Result = pcall(game.ReplicatedStorage.RemoteFunction.InvokeServer , game.ReplicatedStorage.RemoteFunction ,url , true)
-	elseif IsClient and IsStudio then
-		Loaded , Result = pcall(Http.GetAsync , Http , url , true)
-	else
-		Loaded , Result = pcall(game.GetHttp , game , url , true)
-	end
+	local Loaded , Result = pcall(game.GetHttp , game , url , true)
 	return Loaded , Result
 end
 
