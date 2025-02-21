@@ -11,7 +11,9 @@
 - You can check the [Example.lua](/example.lua) file or the following code example:
 ```lua
 local bytecode = BYTECODE_INPUT
-print(Decompile(BYTECODE_INPUT , CUSTOM_OPTIONS))
+local ENV = (getfenv or getrenv or getgenv)()
+local ldecompile = Decompile or decompile or Env["decompile"]
+print(ldecompile(BYTECODE_INPUT , CUSTOM_OPTIONS))
 ```
 
 ## Extra
