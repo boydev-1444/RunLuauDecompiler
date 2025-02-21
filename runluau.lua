@@ -1,3 +1,4 @@
+--!nonstrict
 local DEFAULT_OPTIONS = {
 	["DecompilerTimeOut"] = 10, -- Maximum time to decompile (If it passes it returns "Decompiler Timeout") (VALUE 0 OR NIL NOTHING WILL HAPPEN IF DECOMPILATION TIME EXCEEDS TOO LONG)
 	["ShowUsedGlobals"] = true, -- Show all items than are used in ENV on top of output
@@ -7,6 +8,7 @@ local DEFAULT_OPTIONS = {
 	["Flags"] = { -- Add/remove/change the values of the script
 		["Disassemble"] = true, -- Disassembled view of the bytecode
 		["Logs"] = true, -- Enables/Disables the logging system
+		["Verbose"] = true, -- Chatty mode
 		["DecompilationDateOnTop"] = true, -- Shows the decompilation date on top of the decompilation
 		["ListUpvalues"] = true, -- Shows a list of upvalues on top of the decompilation
 		["ShowAllVariables"] = false, -- Shows all variables (Global, local, upvalues, constants) on top of the decompilation
@@ -20,9 +22,19 @@ local format = string.format
 local random = math.random
 local abs = math.abs
 local VariableDefault = "v%s"
+local GlobalENV = (getfenv or getrenv or getgenv)()
 
 function Resquest(url)
-	local Loaded , Result = pcall(Http.GetAsync , Http , url , true)
+	local IsClient = RunService:IsClient()
+	local IsStudio = RunService:IsStudio()
+	local Loaded , Result = nil , nil
+	if not IsClient and IsStudio then
+		Loaded , Result = pcall(game.ReplicatedStorage.RemoteFunction.InvokeServer , game.ReplicatedStorage.RemoteFunction ,url , true)
+	elseif IsClient and IsStudio then
+		Loaded , Result = pcall(Http.GetAsync , Http , url , true)
+	else
+		Loaded , Result = pcall(game.GetHttp , game , url , true)
+	end
 	return Loaded , Result
 end
 
@@ -81,7 +93,6 @@ function Decompile(bytecode , options , IS_FUNCTION_BODY)
 	local Constants = IsFlagEnabled("ShowConstants")
 	local AllVariables = IsFlagEnabled("ShowAllVariables")
 	local LocalVariables = IsFlagEnabled("ShowLocalVariables")
-	local GlobalENV = (getfenv or getrenv or getgenv)()
 
 	local RestrictGlobals = false
 	if AllVariables == true then
@@ -780,7 +791,6 @@ function Decompile(bytecode , options , IS_FUNCTION_BODY)
 	local DecompiledOutput = {}
 	local SourceEnabled = true
 	if not IS_FUNCTION_BODY then
-		table.insert(DecompiledOutput,"-- Saved by UniversalSynSaveInstance https://discord.gg/wx4ThpAsmw\n")
 		table.insert(DecompiledOutput,`-- Decompiled with RunLuau Decompiler V1 made in Luau by boydev1444`)
 		elapsed_t = tick() - elapsed_t -- Elapsed time is done
 		if RETURNS_ELAPSED_TIME then
@@ -847,6 +857,27 @@ function Decompile(bytecode , options , IS_FUNCTION_BODY)
 		table.insert(DecompiledOutput, result)
 	end
 	return table.concat(DecompiledOutput,"\n") , RETURNS_ELAPSED_TIME and elapsed_t or nil , IS_FUNCTION_BODY and disassembled or nil
+end
+
+GlobalENV.decompile = function(script , options)
+	local result , elapsed_t = `-- Unknown Error` , nil
+	assert(getscriptbytecode , `exploit not supported!`)
+	local function isValidScript()
+		local class = script.ClassName
+		if class == "Script" then
+			return script.RunContext == Enum.RunContext.Client
+		else
+			return class == "LocalScript" or class == "ModuleScript"
+		end
+	end
+	if not isValidScript() then
+		warn(`Attempt to "decompile" Argument #1 (Local/Module->Script expected, got ServerSidedScript)`)
+		return result , elapsed_t
+	end
+	local sourc , elapsed_tim = Decompile(getscriptbytecode(script) , options)
+	result = sourc
+	elapsed_t = elapsed_tim
+	return sourc , elapsed_t
 end
 
 return Decompile
