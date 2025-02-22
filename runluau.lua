@@ -22,9 +22,15 @@ local random = math.random
 local abs = math.abs
 local VariableDefault = "v%s"
 local GlobalENV = (getfenv or getrenv or getgenv)()
+local ForceHttp = true
 
 function Resquest(url)
-	local Loaded , Result = pcall(game.GetHttp , game , url , true)
+	local Loaded , Result = nil , nil
+	if ForceHttp then
+	    Loaded , Result = pcall(Http.GetAsync , Http , url , true)
+	else
+	    Loaded , Result = pcall(game.GetHttp , game , url , true)
+	end
 	return Loaded , Result
 end
 
@@ -54,7 +60,6 @@ function LoadFromUrl(file)
 end
 
 local Luau = LoadFromUrl("Luau")
-
 function Decompile(bytecode , options , IS_FUNCTION_BODY)
 	options = options or DEFAULT_OPTIONS
 	local elapsed_t = tick() -- @field Elapsed time
