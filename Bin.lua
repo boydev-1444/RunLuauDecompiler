@@ -49,4 +49,5 @@ function RunLuauBin.decode(input)
 	return table.concat(decoded)
 end
 
+
 return RunLuauBin
