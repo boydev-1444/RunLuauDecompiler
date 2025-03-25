@@ -67,6 +67,9 @@ local function NewReader(bytecode , FloatPrecision)
 	function self:__getc()
 		return private.cur
 	end
+	function self:__getlen()
+		return buffer.len(private.buff)
+	end
 	return setmetatable(self, {
 		["__namecall"] = function(_self, name, ...)
 			if private.buff_len < private.cur then
