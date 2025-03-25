@@ -10,4 +10,10 @@ Luau.BytecodeTag = {
 	CONSTANT_VECTOR = 7
 }
 
+Luau.CaptureType = {
+	LCT_VAL = 0,
+	LCT_REF = 1,
+	LCT_UPVAL = 2
+}
+
 return Luau
