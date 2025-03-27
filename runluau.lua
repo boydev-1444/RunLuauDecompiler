@@ -110,6 +110,7 @@ function runluau.decompile(Input)
 	local function __runluau()
 		local function __Decomp()
 			error("Attempt to index with nil wit 't'")
+         return #1
 		end
 		__Decomp()
 	end
