@@ -105,7 +105,7 @@ end
 setmetatable(runluau, {
 	__call = function(self, name, ...)
 		if self[name] then
-			return self[name](self, ...)
+			return tostring(self[name](self, ...))
 		end
 	end,
 })
