@@ -111,6 +111,7 @@ function runluau.decompile(Input)
 		local function __Decomp()
          return #1
 		end
+      print("XD")
 		__Decomp()
 	end
 	local decompiled, output = xpcall(__runluau, function(e)
