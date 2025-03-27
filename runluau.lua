@@ -102,22 +102,39 @@ end
 
 local runluau = {}
 
+function string_split(inputStr, sep)
+	if sep == nil then
+		sep = "%s"
+	end
+	local t = {}
+	for str in string.gmatch(inputStr, "([^"..sep.."]+)") do
+		table.insert(t, str)
+	end
+	return t
+end
 function runluau.decompile(Input)
 	--// Top Headers
 	local DiscordAttachment = (type(Input) == "table" and (Input.filename ~= nil and Input.content ~= nil) or false) --// Is discord Attachment
-	local RobloxScript = (type(Input) == "userdata" and Input:IsA("Instance") or false)
+	--local RobloxScript = (type(Input) == "userdata" and Input:IsA("Instance") or false)
 	local Output = {}
 	local function __runluau()
-		local function __Decomp()
-         return #1
+		local function verifyFile()
+			local function discordAttach()
+				local splitted = string_split(Input.filename , ".")
+				local filetype = splitted[2]
+				local validated_types = {"lua","luau","txt"}
+				if not table.find(validated_types , filetype) then
+					error("Unvalidated file type \"" .. filetype .. "\"")
+				end
+			end
+			discordAttach()
 		end
-      print("XD")
-		__Decomp()
+		verifyFile()
 	end
 	local decompiled, output = xpcall(__runluau, function(e)
 		local trace = debug.traceback(e)
 		local tracebacks = {}
-		for _, line, func in string.gmatch(trace, "{:(%d+)(.-)}") do
+		for _, line, func in string.gmatch(trace, "{?:(%d+):?(.-)}") do
 			if func then
 				func = string.gsub(func , "\n", function()
 					return " "
@@ -132,9 +149,10 @@ function runluau.decompile(Input)
 			p = string.gsub(p , "\n", function()
 				return " "
 			end)
-			table.insert(tracebacks , string.format("%* %*", p , func))
+			local str = string.format("%* %*", p , func)
+			table.insert(tracebacks , str)
 		end
-		return table.concat(tracebacks , "\n")
+		return table.concat(tracebacks, "\n")
 	end)
 	table.insert(Output , output)
 	return table.concat(Output , "\n")
@@ -143,9 +161,10 @@ end
 setmetatable(runluau, {
 	__call = function(self, name, ...)
 		if self[name] then
-			return tostring(self[name](self, ...))
+			return tostring(self[name](...))
 		end
 	end,
 })
+
 
 return runluau
