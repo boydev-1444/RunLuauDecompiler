@@ -95,15 +95,10 @@ local Luau = {
 	}
 }
 
-local compile = getscriptbytecode or function(Instance)
-	local code = (typeof(Instance) == "string" and Instance or Instance.Source)
-	return require(game.ReplicatedStorage.Ception).luau_compile(code)
-end
-
 local runluau = {}
 
 function runluau.decompile(Input)
-	local inputIsString = typeof(Input) == "string"
+	local inputIsString = type(Input) == "string"
 	return inputIsString
 end
 
