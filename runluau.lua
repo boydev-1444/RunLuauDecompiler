@@ -95,11 +95,48 @@ local Luau = {
 	}
 }
 
+local compile = getscriptbytecode or function(Instance)
+	local code = (type(Instance) == "string" and Instance or Instance.Source)
+	return require(game.ReplicatedStorage.Ception).luau_compile(code)
+end
+
 local runluau = {}
 
 function runluau.decompile(Input)
-	local inputIsString = type(Input) == "string"
-	return inputIsString
+	--// Top Headers
+	local DiscordAttachment = (type(Input) == "table" and (Input.filename ~= nil and Input.content ~= nil) or false) --// Is discord Attachment
+	local RobloxScript = (type(Input) == "userdata" and Input:IsA("Instance") or false)
+	local Output = {}
+	local function __runluau()
+		local function __Decomp()
+			error("Attempt to index with nil wit 't'")
+		end
+		__Decomp()
+	end
+	local decompiled, output = xpcall(__runluau, function(e)
+		local trace = debug.traceback(e)
+		local tracebacks = {}
+		for _, line, func in string.gmatch(trace, "{:(%d+)(.-)}") do
+			if func then
+				func = string.gsub(func , "\n", function()
+					return " "
+				end)
+			else
+				func = ""
+			end
+			local p = ""
+			if line and line ~= "" then
+				p = ":" .. line .. ":"
+			end
+			p = string.gsub(p , "\n", function()
+				return " "
+			end)
+			table.insert(tracebacks , string.format("%* %*", p , func))
+		end
+		return table.concat(tracebacks , "\n")
+	end)
+	table.insert(Output , output)
+	return table.concat(Output , "\n")
 end
 
 setmetatable(runluau, {
