@@ -123,7 +123,7 @@ function runluau.decompile(Input)
 				local splitted = string_split(Input.filename , ".")
 				local filetype = splitted[2]
 				local validated_types = {"lua","luau","txt"}
-				if not table.find(validated_types , filetype) then
+				if not table_find(validated_types , filetype) then
 					error("Unvalidated file type \"" .. filetype .. "\"")
 				end
 			end
